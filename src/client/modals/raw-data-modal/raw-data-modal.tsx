@@ -39,7 +39,8 @@ import "./raw-data-modal.scss";
 
 const HEADER_HEIGHT = 30;
 const ROW_HEIGHT = 30;
-const LIMIT = 100;
+const DISPLAY_LIMIT = 1000;
+const DOWNLOAD_LIMIT = 100000;
 const TIME_COL_WIDTH = 180;
 const BOOLEAN_COL_WIDTH = 100;
 const NUMBER_COL_WIDTH = 100;
@@ -109,7 +110,7 @@ export class RawDataModal extends React.Component<RawDataModalProps, RawDataModa
   fetchData(essence: Essence, timekeeper: Timekeeper): void {
     const { dataCube } = essence;
     const $main = $("main");
-    const query = $main.filter(essence.getEffectiveFilter(timekeeper).toExpression(dataCube)).limit(LIMIT);
+    const query = $main.filter(essence.getEffectiveFilter(timekeeper).toExpression(dataCube)).limit(DISPLAY_LIMIT);
     this.setState({ loading: true });
     dataCube.executor(query, { timezone: essence.timezone })
       .then(
@@ -182,7 +183,7 @@ export class RawDataModal extends React.Component<RawDataModalProps, RawDataModa
     const filters = this.getStringifiedFilters().map((filter: string, i: number) => {
       return <li className="filter" key={i}>{filter}</li>;
     }).toList();
-    const limit = <li className="limit" key="limit">First {LIMIT} events matching </li>;
+    const limit = <li className="limit" key="limit">First {DISPLAY_LIMIT} events matching </li>;
     return filters.unshift(limit);
   }
 
@@ -276,7 +277,7 @@ export class RawDataModal extends React.Component<RawDataModalProps, RawDataModa
           type="secondary"
           className="download"
           key={`download-${fileFormat}`}
-          onClick={() => this.download(fileFormat)}
+          onClick={() => this.downloadOnClick(fileFormat)}
           title={label}
           disabled={Boolean(loading || error)}
         />
@@ -288,11 +289,30 @@ export class RawDataModal extends React.Component<RawDataModalProps, RawDataModa
     </div>;
   }
 
-  download(fileFormat: FileFormat) {
-    const { dataset } = this.state;
+  downloadOnClick(fileFormat: FileFormat): void {
     const { essence, timekeeper } = this.props;
     const { dataCube } = essence;
+    const $main = $("main");
+    const query = $main.filter(essence.getEffectiveFilter(timekeeper).toExpression(dataCube)).limit(DOWNLOAD_LIMIT);
+    this.setState({ loading: true });
+    dataCube.executor(query, { timezone: essence.timezone })
+        .then(
+            (dataset: Dataset) => {
+              if (!this.mounted) return;
+              this.setState({loading: false});
+              this.download(fileFormat, dataset);
+            },
+            (error: Error) => {
+              if (!this.mounted) return;
+              this.setState({loading: false});
+              this.download(fileFormat, error);
+            }
+        );
+  }
 
+  download(fileFormat: FileFormat, dataset: any) {
+    const { essence, timekeeper } = this.props;
+    const { dataCube } = essence;
     const options = tabularOptions(essence);
     const filtersString = dateFromFilter(essence.getEffectiveFilter(timekeeper));
     download({ dataset, options }, fileFormat, makeFileName(dataCube.name, filtersString, "raw"));
@@ -332,6 +352,7 @@ export class RawDataModal extends React.Component<RawDataModalProps, RawDataModa
           onScroll={this.onScroll}
           onViewportUpdate={this.onScrollerViewportUpdate}
         />
+
         {error ? <QueryError error={error} /> : null}
         {loading ? <Loader /> : null}
         {this.renderButtons()}

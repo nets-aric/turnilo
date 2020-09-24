@@ -54,6 +54,7 @@ import { SplitTilesRow } from "../../components/split-tile/split-tiles-row";
 import { SvgIcon } from "../../components/svg-icon/svg-icon";
 import { VisSelector } from "../../components/vis-selector/vis-selector";
 import { DruidQueryModal } from "../../modals/druid-query-modal/druid-query-modal";
+import { RawDruidQueryModal } from "../../modals/raw-druid-query-modal/raw-druid-query-modal";
 import { RawDataModal } from "../../modals/raw-data-modal/raw-data-modal";
 import { UrlShortenerModal } from "../../modals/url-shortener-modal/url-shortener-modal";
 import { ViewDefinitionModal } from "../../modals/view-definition-modal/view-definition-modal";
@@ -110,6 +111,7 @@ export interface CubeViewState {
   showRawDataModal?: boolean;
   showViewDefinitionModal?: boolean;
   showDruidQueryModal?: boolean;
+  showRawDruidQueryModal?: boolean;
   urlShortenerModalProps?: { url: string, title: string };
   layout?: CubeViewLayout;
   deviceSize?: DeviceSize;
@@ -418,6 +420,27 @@ export class CubeView extends React.Component<CubeViewProps, CubeViewState> {
       onClose={this.closeDruidQueryModal} />;
   }
 
+  openRawDruidQueryModal = () => {
+    this.setState({
+      showRawDruidQueryModal: true
+    });
+  };
+
+  closeRawDruidQueryModal = () => {
+    this.setState({
+      showRawDruidQueryModal: false
+    });
+  };
+
+  renderRawDruidQueryModal() {
+    const { showRawDruidQueryModal, essence, timekeeper } = this.state;
+    if (!showRawDruidQueryModal) return null;
+    return <RawDruidQueryModal
+        timekeeper={timekeeper}
+        essence={essence}
+        onClose={this.closeRawDruidQueryModal} />;
+  }
+
   openUrlShortenerModal = (url: string, title: string) => {
     this.setState({
       urlShortenerModalProps: { url, title }
@@ -553,6 +576,7 @@ export class CubeView extends React.Component<CubeViewProps, CubeViewState> {
       openViewDefinitionModal={this.openViewDefinitionModal}
       openUrlShortenerModal={this.openUrlShortenerModal}
       openDruidQueryModal={this.openDruidQueryModal}
+      openRawDruidQueryModal={this.openRawDruidQueryModal}
       customization={customization}
       getDownloadableDataset={() => this.downloadableDataset}
       changeTimezone={this.changeTimezone}
@@ -646,6 +670,7 @@ export class CubeView extends React.Component<CubeViewProps, CubeViewState> {
             refreshRequestTimestamp={lastRefreshRequestTimestamp} />}
         </div>
         {this.renderDruidQueryModal()}
+        {this.renderRawDruidQueryModal()}
         {this.renderRawDataModal()}
         {this.renderViewDefinitionModal()}
         {this.renderUrlShortenerModal()}
