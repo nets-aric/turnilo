@@ -45,6 +45,7 @@ export interface CubeHeaderBarProps {
   openRawDataModal?: Fn;
   openViewDefinitionModal?: Fn;
   openDruidQueryModal?: Fn;
+  openRawDruidQueryModal: Fn;
   openUrlShortenerModal?: Binary<string, string, void>;
   customization?: Customization;
   getDownloadableDataset?: () => DataSetWithTabOptions;
@@ -206,12 +207,13 @@ export class CubeHeaderBar extends React.Component<CubeHeaderBarProps, CubeHeade
     const { debugMenuAnchor } = this.state;
     if (!debugMenuAnchor) return null;
 
-    const { essence: { dataCube }, openRawDataModal, openViewDefinitionModal, openDruidQueryModal } = this.props;
+    const { essence: { dataCube }, openRawDataModal, openViewDefinitionModal, openDruidQueryModal, openRawDruidQueryModal } = this.props;
     return <DebugMenu
       dataCube={dataCube}
       openRawDataModal={openRawDataModal}
       openDruidQueryModal={openDruidQueryModal}
       openViewDefinitionModal={openViewDefinitionModal}
+      openRawDruidQueryModal={openRawDruidQueryModal}
       openOn={debugMenuAnchor}
       onClose={this.closeDebugMenu} />;
   }

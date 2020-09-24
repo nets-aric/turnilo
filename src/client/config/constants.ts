@@ -163,6 +163,7 @@ export const STRINGS: any = {
   updateTimezone: "Update Timezone",
   displayRawData: "Display raw data",
   displayDruidQuery: "Display Druid query",
+  displayRawDruidQuery: "Display raw data Druid query",
   displayViewDefinition: "Display view definition",
   viewDefinition: "View definition",
   yes: "Yes"
