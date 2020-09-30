@@ -17,6 +17,8 @@
 import * as React from "react";
 import { classNames } from "../../../utils/dom/dom";
 import "./split-value.scss";
+import { STRINGS } from "../../../../config/constants";
+import {DetokenisationValue} from "../../../../components/detokenisation/detokenisation"
 
 interface SplitValueProps {
   highlight: boolean;
@@ -25,8 +27,9 @@ interface SplitValueProps {
   style: React.CSSProperties;
 }
 
-export const SplitValue: React.SFC<SplitValueProps> = ({ className, highlight, dimmed, children, style }) =>
-  <div
+export const SplitValue: React.SFC<SplitValueProps> = ({ className, highlight, dimmed, children, style }) => {
+  return <div
     className={classNames("split-value", className, { dimmed, highlight })}
-    style={style}
-  >{children}</div>;
+    style={style}><DetokenisationValue token={children.toString()} />
+  </div>;
+}  

@@ -24,6 +24,7 @@ import { join } from "path";
 import { LOGGER } from "../common/logger/logger";
 import { SERVER_SETTINGS, SETTINGS_MANAGER, VERSION } from "./config";
 import { PluginSettings } from "./models/plugin-settings/plugin-settings";
+import { detokeniseRouter } from "./routes/detokenise/detokenise";
 import { livenessRouter } from "./routes/liveness/liveness";
 import { mkurlRouter } from "./routes/mkurl/mkurl";
 import { plyqlRouter } from "./routes/plyql/plyql";
@@ -144,6 +145,7 @@ attachRouter("/plywood", plywoodRouter(SETTINGS_MANAGER));
 attachRouter("/plyql", plyqlRouter(appSettings));
 attachRouter("/mkurl", mkurlRouter(appSettings));
 attachRouter("/shorten", shortenRouter(appSettings, isTrustedProxy));
+attachRouter("/detokenise", detokeniseRouter(settingsGetter));
 
 const freshSettingsGetter: SettingsGetter = opts => SETTINGS_MANAGER.getFreshSettings(opts);
 attachRouter("/", turniloRouter(freshSettingsGetter, VERSION));
