@@ -21,6 +21,7 @@ import { LOGGER } from "../../logger/logger";
 import { ImmutableUtils } from "../../utils/immutable-utils/immutable-utils";
 import { ExternalView, ExternalViewValue } from "../external-view/external-view";
 import { UrlShortener, UrlShortenerDef } from "../url-shortener/url-shortener";
+import { Detokeniser, DetokeniserDef } from "../detokeniser/detokeniser";
 
 const availableCssVariables = [
   "background-base",
@@ -88,6 +89,7 @@ export interface CustomizationValue {
   timezones?: Timezone[];
   logoutHref?: string;
   urlShortener?: UrlShortener;
+  detokeniser?: Detokeniser;
   sentryDSN?: string;
   cssVariables?: Record<string, string>;
 }
@@ -100,6 +102,7 @@ export interface CustomizationJS {
   timezones?: string[];
   logoutHref?: string;
   urlShortener?: UrlShortenerDef;
+  detokeniser?: DetokeniserDef;
   sentryDSN?: string;
   cssVariables?: Record<string, string>;
 }
@@ -162,6 +165,10 @@ export class Customization implements Instance<CustomizationValue, Customization
       value.urlShortener = UrlShortener.fromJS(parameters.urlShortener);
     }
 
+    if (parameters.detokeniser) {
+      value.detokeniser = Detokeniser.fromJS(parameters.detokeniser);
+    }
+
     return new Customization(value);
   }
 
@@ -172,6 +179,7 @@ export class Customization implements Instance<CustomizationValue, Customization
   public title: string;
   public logoutHref: string;
   public urlShortener: UrlShortener;
+  public detokeniser: Detokeniser;
   public sentryDSN: string;
   public cssVariables?: Record<string, string>;
 
@@ -183,6 +191,7 @@ export class Customization implements Instance<CustomizationValue, Customization
     if (parameters.timezones) this.timezones = parameters.timezones;
     this.logoutHref = parameters.logoutHref;
     if (parameters.urlShortener) this.urlShortener = parameters.urlShortener;
+    if (parameters.detokeniser) this.detokeniser = parameters.detokeniser;
     if (parameters.sentryDSN) this.sentryDSN = parameters.sentryDSN;
     if (parameters.cssVariables) this.cssVariables = parameters.cssVariables;
   }
@@ -195,6 +204,7 @@ export class Customization implements Instance<CustomizationValue, Customization
       externalViews: this.externalViews,
       timezones: this.timezones,
       urlShortener: this.urlShortener,
+      detokeniser: this.detokeniser,
       logoutHref: this.logoutHref,
       sentryDSN: this.sentryDSN,
       cssVariables: this.cssVariables
@@ -215,6 +225,9 @@ export class Customization implements Instance<CustomizationValue, Customization
     }
     if (this.urlShortener) {
       js.urlShortener = this.urlShortener.toJS();
+    }
+    if (this.detokeniser) {
+      js.detokeniser = this.detokeniser.toJS();
     }
     if (this.logoutHref) js.logoutHref = this.logoutHref;
     if (this.cssVariables) js.cssVariables = this.cssVariables;
@@ -237,6 +250,7 @@ export class Customization implements Instance<CustomizationValue, Customization
       this.headerBackground === other.headerBackground &&
       this.customLogoSvg === other.customLogoSvg &&
       (!this.urlShortener || this.urlShortener.equals(other.urlShortener)) &&
+      (!this.detokeniser || this.detokeniser.equals(other.detokeniser)) &&
       immutableArraysEqual(this.externalViews, other.externalViews) &&
       immutableArraysEqual(this.timezones, other.timezones) &&
       this.sentryDSN === other.sentryDSN &&

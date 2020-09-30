@@ -16,6 +16,7 @@
  */
 
 import { Request, Response, Router } from "express";
+import * as request from "request-promise-native";
 import {SettingsGetter } from "../../utils/settings-manager/settings-manager";
 
 export function detokeniseRouter(settingsGetter: SettingsGetter) {
@@ -25,7 +26,8 @@ export function detokeniseRouter(settingsGetter: SettingsGetter) {
   router.post("/", async (req: Request, res: Response) => {
     try {
       const settings = await settingsGetter();
-      const detokenised_token = req.body.token + "_detokenised";
+      const detokeniser = settings.customization.detokeniser;
+      const detokenised_token = await detokeniser.detokeniserFunction(req.body.token, request);
       res.json({ data: detokenised_token});
     } catch (error) {
       console.log("error:", error.message);
