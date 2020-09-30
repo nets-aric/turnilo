@@ -23,6 +23,7 @@ import { hsts } from "helmet";
 import * as path from "path";
 import { LOGGER } from "../common/logger/logger";
 import { AUTH, SERVER_SETTINGS, SETTINGS_MANAGER, VERSION } from "./config";
+import { detokeniseRouter } from "./routes/detokenise/detokenise";
 import { livenessRouter } from "./routes/liveness/liveness";
 import { mkurlRouter } from "./routes/mkurl/mkurl";
 import { plyqlRouter } from "./routes/plyql/plyql";
@@ -110,6 +111,7 @@ attachRouter("/plywood", plywoodRouter(settingsGetter));
 attachRouter("/plyql", plyqlRouter(settingsGetter));
 attachRouter("/mkurl", mkurlRouter(settingsGetter));
 attachRouter("/shorten", shortenRouter(settingsGetter));
+attachRouter("/detokenise", detokeniseRouter(settingsGetter));
 
 // View routes
 if (SERVER_SETTINGS.getIframe() === "deny") {
