@@ -31,13 +31,18 @@ export class DetokenisationValue extends React.Component<TokenProp, Detokenisati
   state: DetokenisationValueState = { data: null };
 
   componentDidMount() {
-    this.detokenise()
+    if (/^t:[0-9a-fA-F]{24}$/.test(this.props.token)){
+      this.detokenise()
       .then(({ data }) => {
         this.setState({ data });
       })
       .catch(() => {
         this.setState({ error: "Couldn't detokenise the token provided" });
       });
+    }
+    else {
+      this.setState({ data: "doesn't match" });
+    }
   }
 
   detokenise() {

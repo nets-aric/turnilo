@@ -19,5 +19,5 @@ import { Detokeniser } from "./detokeniser";
 export const FailDetokeniserJS = "return Promise.reject(new Error('error message'));";
 export const FailDetokeniser = new Detokeniser(FailDetokeniserJS);
 
-export const SuccessDetokeniserJS = "return Promise.resolve('http://foobar');";
+export const SuccessDetokeniserJS = "return Promise.resolve('Detokenised Value');";
 export const SuccessDetokeniser = new Detokeniser(SuccessDetokeniserJS);
