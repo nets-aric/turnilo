@@ -33,12 +33,15 @@ export class DetokenisationValue extends React.Component<TokenProp, Detokenisati
   componentDidMount() {
     if (/^t:[0-9a-fA-F]{24}$/.test(this.props.token)){
       this.detokenise()
-      .then(({ data }) => {
-        this.setState({ data });
+      .then(({ data, error }) => {
+        if (error){
+          this.setState({ error: error });
+        }else{
+          this.setState({ data: data });
+        }
       })
       .catch(() => {
-        console.log("error caught")
-        this.setState({ error: "Detokenisation Failed" });
+        this.setState({ error: STRINGS.detokenisationFailed });
       });
     }
     else {
@@ -52,18 +55,14 @@ export class DetokenisationValue extends React.Component<TokenProp, Detokenisati
       body: JSON.stringify({"token": this.props.token}),
       headers: {"Content-Type": "application/json"}
     })
-    .then(response=>{
+    .then(response => {
       return response.json();
     })
   }
 
-  renderDetokenisedValue(){
+  renderDetokenisedValue() {
     const { data, error } = this.state;
-    if (error) {
-      console.log("error here") 
-      console.log(error)
-      return error;
-    }
+    if (error) return error;
     if (!data) return STRINGS.detokenisation;
     return data;
   }

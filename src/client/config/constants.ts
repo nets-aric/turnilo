@@ -167,7 +167,8 @@ export const STRINGS: any = {
   displayViewDefinition: "Display view definition",
   viewDefinition: "View definition",
   yes: "Yes",
-  detokenisation: "Fetching Detokenised Data"
+  detokenisation: "Fetching Detokenised Data",
+  detokenisationFailed: "Detokenisation Failed"
 };
 
 // Data cubes introspection strategies
