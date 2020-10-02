@@ -18,7 +18,6 @@
 import { Request, Response, Router } from "express";
 import * as request from "request-promise-native";
 import {SettingsGetter } from "../../utils/settings-manager/settings-manager";
-import { STRINGS } from "../../../../src/client/config/constants";
 
 export function detokeniseRouter(settingsGetter: SettingsGetter) {
 
@@ -34,10 +33,7 @@ export function detokeniseRouter(settingsGetter: SettingsGetter) {
       if (error.hasOwnProperty("stack")) {
         console.log((<any> error).stack);
       }
-      res.status(500).send({
-        error: STRINGS.detokenisationFailed ,
-        message: error.message
-      });
+      res.status(400).send({error: "Detokenisation Failed"});
     }
   });
 
