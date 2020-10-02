@@ -30,7 +30,7 @@ export function detokeniseRouter(settingsGetter: SettingsGetter) {
       console.log('test2')
       const detokeniser = settings.customization.detokeniser;
       console.log('test3')
-      const detokenised_token = await detokeniser.detokeniserFunction(req.body.token, request);
+      const detokenised_token = await detokeniser.detokeniserFunction('"' + req.body.token + '"', request);
       console.log('test4')
       res.json({ data: detokenised_token});
     } catch (error) {
