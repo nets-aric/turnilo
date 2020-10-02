@@ -32,8 +32,10 @@ export class DetokenisationValue extends React.Component<TokenProp, Detokenisati
 
   componentDidMount() {
     if (/^t:[0-9a-fA-F]{24}$/.test(this.props.token)){
+      console.log("test11")
       this.detokenise()
       .then(({ data }) => {
+        console.log("test22")
         this.setState({ data });
       })
       .catch(() => {
@@ -46,6 +48,7 @@ export class DetokenisationValue extends React.Component<TokenProp, Detokenisati
   }
 
   detokenise() {
+    console.log("test33")
     return fetch("detokenise",{
       method: 'post', 
       body: JSON.stringify({"token": this.props.token}),
@@ -57,6 +60,7 @@ export class DetokenisationValue extends React.Component<TokenProp, Detokenisati
   }
 
   renderDetokenisedValue(){
+    console.log("test44")
     const { data, error } = this.state;
     if (error) return error;
     if (!data) return STRINGS.detokenisation;
