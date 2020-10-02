@@ -166,7 +166,8 @@ export const STRINGS: any = {
   displayRawDruidQuery: "Display raw data Druid query",
   displayViewDefinition: "Display view definition",
   viewDefinition: "View definition",
-  yes: "Yes"
+  yes: "Yes",
+  detokenisation: "Fetching Detokenised Data"
 };
 
 // Data cubes introspection strategies

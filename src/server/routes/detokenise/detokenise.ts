@@ -25,19 +25,25 @@ export function detokeniseRouter(settingsGetter: SettingsGetter) {
 
   router.post("/", async (req: Request, res: Response) => {
     try {
+      console.log('test1')
       const settings = await settingsGetter();
+      console.log('test2')
       const detokeniser = settings.customization.detokeniser;
+      console.log('test3')
       const detokenised_token = await detokeniser.detokeniserFunction(req.body.token, request);
+      console.log('test4')
       res.json({ data: detokenised_token});
     } catch (error) {
-      console.log("error:", error.message);
+      console.log('test5')
       if (error.hasOwnProperty("stack")) {
         console.log((<any> error).stack);
       }
+      console.log('test6')
       res.status(500).send({
         error: "Could not detokenise token",
         message: error.message
       });
+      console.log('test7')
     }
   });
 
