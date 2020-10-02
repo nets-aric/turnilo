@@ -36,6 +36,5 @@ export function detokeniseRouter(settingsGetter: SettingsGetter) {
       res.status(400).send({error: "Detokenisation Failed"});
     }
   });
-
   return router;
 }

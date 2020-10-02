@@ -35,8 +35,8 @@ export class DetokenisationValue extends React.Component<TokenProp, Detokenisati
       this.detokenise()
       .then(({ data, error }) => {
         if (error){
-          this.setState({ error: error });
-        }else{
+          this.setState({ error: STRINGS.detokenisationFailed });
+        } else {
           this.setState({ data: data });
         }
       })
