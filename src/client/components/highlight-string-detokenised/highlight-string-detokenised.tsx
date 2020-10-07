@@ -17,7 +17,7 @@
 
 import * as React from "react";
 import { classNames } from "../../utils/dom/dom";
-import ReactDOMServer from 'react-dom/server'
+import * as ReactDOMServer from 'react-dom/server'
 import "./highlight-string-detokenised.scss";
 
 import {DetokenisationValue} from "../../components/detokenisation/detokenisation"
@@ -30,9 +30,9 @@ export interface HighlightStringDetokenisedProps {
 
 function highlightByIndex(text: string, start: number, end: number) {
   return [
-    <span className="pre" key="pre">{text.substring(0, start)}_test1</span>,
-    <span className="bold" key="bold">{text.substring(start, end)}_test2</span>,
-    <span className="post" key="post">{text.substring(end)}_test3</span>
+    <span className="pre" key="pre">{text.substring(0, start)}</span>,
+    <span className="bold" key="bold">{text.substring(start, end)}</span>,
+    <span className="post" key="post">{text.substring(end)}</span>
   ];
 }
 
