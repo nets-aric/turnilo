@@ -17,9 +17,7 @@
 
 import * as React from "react";
 import { classNames } from "../../utils/dom/dom";
-import ReactDOMServer from 'react-dom/server'
 import "./highlight-string-detokenised.scss";
-
 import {DetokenisationValue} from "../../components/detokenisation/detokenisation"
 
 export interface HighlightStringDetokenisedProps {
