@@ -19,6 +19,7 @@ import { STRINGS } from "../../config/constants";
 
 interface TokenProp {
     token: string;
+    highlight?: string | RegExp
 }
 
 interface  DetokenisationValueState{
@@ -60,10 +61,35 @@ export class DetokenisationValue extends React.Component<TokenProp, Detokenisati
     })
   }
 
+  highlightByIndex(text: string, start: number, end: number) {
+    return [
+      <span className="pre" key="pre">{text.substring(0, start)}</span>,
+      <span className="bold" key="bold">{text.substring(start, end)}</span>,
+      <span className="post" key="post">{text.substring(end)}</span>
+    ];
+  }
+  
+  highlightBy(text: string, highlight: string | RegExp): string | JSX.Element[] {
+    
+    if (!highlight) return text;
+  
+    if (typeof highlight === "string") {
+      const strLower = text.toLowerCase();
+      const startIndex = strLower.indexOf(highlight.toLowerCase());
+      if (startIndex === -1) return text;
+      return this.highlightByIndex(text, startIndex, startIndex + highlight.length);
+    }
+    const match = text.match(highlight);
+    if (!match) return text;
+    const startIndex = match.index;
+    return this.highlightByIndex(text, startIndex, startIndex + match[0].length);
+  }
+
   renderDetokenisedValue() {
     const { data, error } = this.state;
     if (error) return error;
     if (!data) return STRINGS.detokenisation;
+    if (!data && this.props.highlight) return this.highlightBy(STRINGS.detokenisation, this.props.highlight)
     return data;
   }
 

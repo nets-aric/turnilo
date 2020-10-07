@@ -17,7 +17,9 @@
 
 import * as React from "react";
 import { classNames } from "../../utils/dom/dom";
+import ReactDOMServer from 'react-dom/server'
 import "./highlight-string-detokenised.scss";
+
 import {DetokenisationValue} from "../../components/detokenisation/detokenisation"
 
 export interface HighlightStringDetokenisedProps {
@@ -26,30 +28,6 @@ export interface HighlightStringDetokenisedProps {
   highlight: string | RegExp;
 }
 
-function highlightByIndex(text: string, start: number, end: number) {
-  return [
-    <span className="pre" key="pre">{text.substring(0, start)}</span>,
-    <span className="bold" key="bold">{text.substring(start, end)}</span>,
-    <span className="post" key="post">{text.substring(end)}</span>
-  ];
-}
-
-function highlightBy(text: string, highlight: string | RegExp): string | JSX.Element[] {
-  
-  if (!highlight) return text;
-
-  if (typeof highlight === "string") {
-    const strLower = text.toLowerCase();
-    const startIndex = strLower.indexOf(highlight.toLowerCase());
-    if (startIndex === -1) return text;
-    return highlightByIndex(text, startIndex, startIndex + highlight.length);
-  }
-  const match = text.match(highlight);
-  if (!match) return text;
-  const startIndex = match.index;
-  return highlightByIndex(text, startIndex, startIndex + match[0].length);
-}
-
 export const HighlightStringDetokenised: React.SFC<HighlightStringDetokenisedProps> = ({ className, text, highlight }) => {
-  return <span className={classNames("highlight-string-detokenised", className)}><DetokenisationValue token={text}></DetokenisationValue></span>;
+  return <span className={classNames("highlight-string-detokenised", className)}><DetokenisationValue token={text} highlight={highlight}></DetokenisationValue></span>;
 };
