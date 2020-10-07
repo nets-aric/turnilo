@@ -17,7 +17,8 @@
 
 import * as React from "react";
 import { classNames } from "../../utils/dom/dom";
-import "./highlight-string-detokensied.scss";
+import "./highlight-string-detokenised.sccs";
+import {DetokenisationValue} from "../../components/detokenisation/detokenisation"
 
 export interface HighlightStringDetokenisedProps {
   className?: string;
@@ -40,6 +41,7 @@ function highlightBy(text: string, highlight: string | RegExp): string | JSX.Ele
     const strLower = text.toLowerCase();
     const startIndex = strLower.indexOf(highlight.toLowerCase());
     if (startIndex === -1) return text;
+    const test= <DetokenisationValue token={text}/>
     return highlightByIndex(text, startIndex, startIndex + highlight.length);
   }
   const match = text.match(highlight);
