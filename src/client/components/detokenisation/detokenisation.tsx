@@ -68,6 +68,6 @@ export class DetokenisationValue extends React.Component<TokenProp, Detokenisati
   }
 
   render() {
-    return <React.Fragment>{this.renderDetokenisedValue()}</React.Fragment>;
+    return this.renderDetokenisedValue();
   }
 }
