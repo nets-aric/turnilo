@@ -17,6 +17,7 @@
 import * as React from "react";
 import { NORMAL_COLORS } from "../../../../common/models/colors/colors";
 import "./legend.scss";
+import {DetokenisationValue} from "../../../components/detokenisation/detokenisation"
 
 export interface LegendProps {
   values: string[];
@@ -39,7 +40,7 @@ const LegendValues: React.SFC<LegendValuesProps> = props => {
             <div className="legend-value-color" style={style} />
           </td>
           <td className="legend-value-label">
-            <span className="legend-value-name">{value}</span>
+            <span className="legend-value-name"><DetokenisationValue token={value}/></span>
           </td>
         </tr>;
       })}

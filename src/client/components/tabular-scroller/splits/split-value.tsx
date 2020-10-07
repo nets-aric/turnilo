@@ -30,6 +30,6 @@ interface SplitValueProps {
 export const SplitValue: React.SFC<SplitValueProps> = ({ className, highlight, dimmed, children, style }) => {
   return <div
     className={classNames("split-value", className, { dimmed, highlight })}
-    style={style}><DetokenisationValue token={children.toString()} />
+    style={style}><DetokenisationValue token={children.toString()}/>
   </div>;
 }  
