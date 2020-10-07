@@ -18,7 +18,7 @@ import * as React from "react";
 import { Binary } from "../../../common/utils/functional/functional";
 import { classNames } from "../../utils/dom/dom";
 import { Checkbox, CheckboxType } from "../checkbox/checkbox";
-import { HighlightString } from "../highlight-string/highlight-string";
+import { HighlightStringDetokenised } from "../highlight-string-detokenised/highlight-string-detokenised";
 import "./string-value.scss";
 
 interface StringValueProps {
@@ -42,7 +42,7 @@ export const StringValue: React.SFC<StringValueProps> = props => {
   >
     <div className="value-wrapper">
       <Checkbox type={checkboxStyle as CheckboxType} selected={selected} />
-      <HighlightString className="label" text={label} highlight={highlight} />
+      <HighlightStringDetokenised className="label" text={label} highlight={highlight} />
     </div>
   </div>;
 };
