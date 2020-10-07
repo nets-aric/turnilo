@@ -36,7 +36,7 @@ export const ColorSwabs: React.SFC<ColorSwabsProps> = ({ colorEntries }) => {
       <td>
         <div className="color-swab" style={swabStyle} />
       </td>
-      <td className="color-name">{name}</td>
+      <td className="color-name">{name}_detokenised</td>
       <td className="color-value">{value}</td>
       {previous && <td className="color-previous">{previous}</td>}
       {delta && <td className="color-delta">{delta}</td>}
