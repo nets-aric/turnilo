@@ -18,7 +18,7 @@ import * as React from "react";
 import { Unary } from "../../../common/utils/functional/functional";
 import { classNames } from "../../utils/dom/dom";
 import { Checkbox } from "../checkbox/checkbox";
-import { HighlightString } from "../highlight-string/highlight-string";
+import { HighlightStringDetokenised } from "../highlight-string-detokenised/highlight-string-detokenised";
 import "./selectable-row.scss";
 
 interface SelectableRowProps {
@@ -38,7 +38,7 @@ export const SelectableRow: React.SFC<SelectableRowProps> = props => {
   >
     <div className="segment-value" title={strValue}>
       <Checkbox selected={selected} type="check" />
-      <HighlightString className="label" text={strValue} highlight={searchText} />
+      <HighlightStringDetokenised className="label" text={strValue} highlight={searchText} />
     </div>
     {measure && <div className="measure-value">{measure}</div>}
   </div>;
