@@ -16,6 +16,7 @@
 
 import * as React from "react";
 import { ColorEntry } from "./color-entry";
+import {DetokenisationValue} from "../../components/detokenisation/detokenisation"
 import "./color-swabs.scss";
 
 interface ColorSwabsProps {
@@ -29,7 +30,7 @@ export const ColorSwabs: React.SFC<ColorSwabsProps> = ({ colorEntries }) => {
       <td>
         <div className="color-swab" style={swabStyle} />
       </td>
-      <td className="color-name">{name}_detokenised</td>
+      <td className="color-name"><DetokenisationValue token={name}></DetokenisationValue></td>
       <td className="color-value">{value}</td>
       {previous && <td className="color-previous">{previous}</td>}
       {delta && <td className="color-delta">{delta}</td>}
