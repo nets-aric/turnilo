@@ -20,6 +20,7 @@ import { NORMAL_COLORS } from "../../../../common/models/colors/colors";
 import { Essence } from "../../../../common/models/essence/essence";
 import { ConcreteSeries } from "../../../../common/models/series/concrete-series";
 import { SPLIT } from "../../../config/constants";
+import {DetokenisationValue} from "../../../components/detokenisation/detokenisation"
 import "./line-chart-legend.scss";
 
 export interface LineChartLegendProps {
@@ -46,7 +47,8 @@ const LegendValues: React.SFC<LegendValuesProps> = props => {
             <div className="legend-value-color" style={style} />
           </td>
           <td className="legend-value-label">
-            <span className="legend-value-name">{splitValue}</span>
+            <span className="legend-value-name">
+            <DetokenisationValue token={splitValue}/></span>
           </td>
           {series && <td className="legend-value-measure">{series.formatValue(datum)}</td>}
         </tr>;
