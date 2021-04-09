@@ -1,10 +1,8 @@
 name: Docker Image CI
 
 on:
-  push:
-    branches: [ dockerImage-CICD ]
-  pull_request:
-    branches: [ dockerImage-CICD ]
+  release:
+    types: [published]
 
 jobs:
 
