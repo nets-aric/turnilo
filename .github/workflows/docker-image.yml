@@ -32,8 +32,8 @@ jobs:
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         ECR_REPOSITORY: nets-analytics-turnilo
-        IMAGE_BRANCH: ${ GITHUB_REF#refs/heads/ }
-        IMAGE_TAG: ${ GITHUB_REF#refs/tags/ }
+        IMAGE_BRANCH: ${ github.ref##*/ }
+        IMAGE_TAG: ${ github.ref##*/ }
       run: |
         # Build a docker container and push it to ECR 
         docker build -f Dockerfile -t $ECR_REGISTRY/$ECR_REPOSITORY:${IMAGE_BRANCH}-${IMAGE_TAG} .
