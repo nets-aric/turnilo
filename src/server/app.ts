@@ -145,7 +145,7 @@ attachRouter("/plywood", plywoodRouter(SETTINGS_MANAGER));
 attachRouter("/plyql", plyqlRouter(appSettings));
 attachRouter("/mkurl", mkurlRouter(appSettings));
 attachRouter("/shorten", shortenRouter(appSettings, isTrustedProxy));
-attachRouter("/detokenise", detokeniseRouter(settingsGetter));
+attachRouter("/detokenise", detokeniseRouter(appSettings));
 
 const freshSettingsGetter: SettingsGetter = opts => SETTINGS_MANAGER.getFreshSettings(opts);
 attachRouter("/", turniloRouter(freshSettingsGetter, VERSION));

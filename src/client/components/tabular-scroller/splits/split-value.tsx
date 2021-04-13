@@ -17,7 +17,7 @@
 import * as React from "react";
 import { classNames } from "../../../utils/dom/dom";
 import "./split-value.scss";
-import {DetokenisationValue} from "../../../../components/detokenisation/detokenisation"
+import {DetokenisationValue} from "../../../components/detokenisation/detokenisation"
 
 interface SplitValueProps {
   highlight: boolean;
@@ -31,4 +31,4 @@ export const SplitValue: React.SFC<SplitValueProps> = ({ className, highlight, d
     className={classNames("split-value", className, { dimmed, highlight })}
     style={style}><DetokenisationValue token={children.toString()}/>
   </div>;
-}  
+}

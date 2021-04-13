@@ -19,6 +19,7 @@ import * as React from "react";
 import { noop } from "../../../common/utils/functional/functional";
 import { classNames } from "../../utils/dom/dom";
 import "./heatmap-labels.scss";
+import {DetokenisationValue} from "../../components/detokenisation/detokenisation";
 
 interface HeatmapLabelsProps {
   labels: string[];
@@ -60,7 +61,7 @@ export class HeatmapLabels extends React.Component<HeatmapLabelsProps> {
             key={label}
             className={classNames("heatmap-label-wrapper", { "heatmap-label-hovered": hover, "heatmap-label-highlight": highlight })}>
             <span className={heatmapLabelClassName} style={labelSize ? { width: labelSize } : undefined}>
-              <span className="heatmap-label-overflow-container">{label}</span>
+              <span className="heatmap-label-overflow-container">{<DetokenisationValue token={label}/>}</span>
             </span>
           </span>;
         })}
