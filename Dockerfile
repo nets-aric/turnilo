@@ -21,7 +21,7 @@ RUN npm prune --production
 #
 # RUNTIME stage
 #
-FROM gcr.io/distroless/nodejs:14 as runtime
+FROM node:14.15.4-slim as runtime
 
 WORKDIR /app
 
@@ -43,4 +43,4 @@ COPY --from=build /usr/src/app/node_modules ./node_modules
 # Expose default port
 EXPOSE 9090
 
-ENTRYPOINT [ "/nodejs/bin/node", "bin/turnilo" ]
+ENTRYPOINT [ "node", "bin/turnilo" ]
